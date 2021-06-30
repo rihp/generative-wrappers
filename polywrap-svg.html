@@ -1,0 +1,137 @@
+<style>
+  #polywrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  svg {
+    width: 60vh;
+  }
+
+  .click-through {
+    pointer-events: none;
+  }
+</style>
+
+<main id="polywrap"></main>
+
+<script>
+
+  const atoms = [
+    {
+      fill: "#1B5FED",
+      link: "https://www.uniswap.org",
+      timing: {
+        morph: 16,
+        pulse: 6,
+      },
+      paths: [
+        "M88.1488 43.7723C110.143 44.856 120.009 69.3981 117.873 90.9421C115.712 112.74 97.6511 124.254 76.3906 121.203C54.9067 118.121 39.6313 98.7719 42.2069 76.9103C44.7626 55.2168 59.0986 42.341 88.1488 43.7723Z;",
+        "M97.75 58.751C118.359 66.5093 123.122 85.1429 114.5 105.001C105.776 125.094 76.3089 123.908 57 114.501C37.4881 104.996 34.625 75.3765 46.125 56.5014C58.5624 36.0878 70.5295 48.5038 97.75 58.751Z;",
+        "M79.5001 71.5225C94.6462 77.2243 106.586 93.9056 100.25 108.5C93.8384 123.267 72.4405 124.413 58.25 117.5C43.9104 110.515 34.5336 82.4678 41.2493 67.7499C47.9135 53.1452 59.4951 63.9917 79.5001 71.5225Z;",
+        "M63.7827 85.8107C74.6045 86.3439 79.4587 98.4191 78.4078 109.019C77.3446 119.744 68.458 125.409 57.9974 123.908C47.4269 122.392 39.9111 112.872 41.1783 102.115C42.4358 91.4416 49.4894 85.1064 63.7827 85.8107Z;",
+        "M69.6815 87.3332C80.1588 91.2774 81.1183 104.69 76.735 114.786C72.3 125 61.7678 127.765 51.9516 122.983C42.0321 118.151 37.6469 106.411 42.2925 96.2298C46.9024 86.127 55.8432 82.1238 69.6815 87.3332Z;",
+      ]
+    },
+    {
+      fill: "#FFC272",
+      link: "https://www.ethereum.org",
+      timing: {
+        morph: 24,
+        pulse: 16,
+      },
+      paths: [
+        "M119.2 82.4002C121.445 104.307 100.371 120.551 78.751 121.688C56.8765 122.838 41.5031 103.877 41.3131 82.4002C41.1212 60.6972 58.0006 43.2503 80.0006 42.5004C101.832 41.7564 117.001 60.9375 119.2 82.4002Z;",
+        "M90.8666 42.0693C107.748 48.767 111.609 70.3695 104.209 86.619C96.7227 103.06 76.9987 107.088 61.2138 99.0507C45.2632 90.9285 38.9255 71.9374 46.7526 55.5571C54.5196 39.3026 74.3274 35.5073 90.8666 42.0693Z;",
+        "M73.1369 47.4013C83.2158 51.4002 85.5209 64.298 81.1031 73.9998C76.6333 83.8159 64.857 86.2211 55.4326 81.4221C45.9093 76.5727 42.1253 65.2341 46.7985 55.4542C51.4358 45.7494 63.2621 43.4834 73.1369 47.4013Z;",
+        "M57.5006 50.5919C61.3451 50.2227 64.1705 53.937 64.3457 57.7299C64.5229 61.5676 61.1804 64.2426 57.4135 64.2519C53.6069 64.2613 50.566 61.2814 50.4591 57.4222C50.353 53.5926 53.734 50.9536 57.5006 50.5919Z;",
+        "M50.0201 59.8715C48.1742 55.8645 51.1159 51.4188 55.1404 49.8016C59.2123 48.1652 63.3558 50.7626 64.7844 54.8215C66.2279 58.923 64.1595 63.3246 60.0378 64.8932C55.9478 66.4498 51.8287 63.7974 50.0201 59.8715Z;",
+      ]
+    }
+  ];
+
+  const paths = atoms.map((atom) => {
+    return `
+      <a href="${atom.link}" target="_blank" rel="noredirect">
+        <path fill="${atom.fill}">
+          <animate
+            attributeName="d"
+            fill="freeze"
+            dur="${atom.timing.morph}s"
+            repeatCount="1"
+            values="
+              ${atom.paths[0]}
+              ${atom.paths[1]}
+              ${atom.paths[2]}
+              ${atom.paths[3]}
+            "
+          />
+          <animate
+            attributeName="d"
+            begin="${atom.timing.morph}s"
+            dur="${atom.timing.pulse}s"
+            repeatCount="indefinite"
+            values="
+              ${atom.paths[3]}
+              ${atom.paths[4]}
+              ${atom.paths[3]}
+            "
+          />
+        </path>
+      </a>
+    `
+  })
+
+  const polywrapSvg = `
+    <svg viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      ${paths}
+      <g id="wrapper" class="click-through">
+        <circle cx="80" cy="82.3999" r="56" fill="url(#paint4_radial)" fill-opacity="0.6"/>
+        <g opacity="0.5" filter="url(#filter0_f)">
+        <path d="M128.864 67.6995C133.549 93.0271 119.669 118.88 94.748 128.413C85.159 132.082 75.1748 132.859 65.7548 131.176C76.665 135.436 89.1343 135.806 100.936 131.292C126.113 121.66 138.716 93.4422 129.084 68.2647C129.012 68.0756 128.938 67.8872 128.864 67.6995Z" fill="white"/>
+        </g>
+        <g opacity="0.1" filter="url(#filter1_f)">
+        <path class="click-through" fill-rule="evenodd" clip-rule="evenodd" d="M134.805 93.9624C129.478 119.343 106.965 138.4 80.0004 138.4C65.6544 138.4 52.5684 133.006 42.6602 124.134C80.3505 137.034 122.227 126.962 134.805 93.9624Z" fill="#1E2B45"/>
+        </g>
+        <g filter="url(#filter2_f)">
+        <path class="click-through" d="M29.4925 86.8547C31.0792 61.1465 50.8051 39.423 77.2926 36.2068C87.4844 34.9693 97.3599 36.6318 106.092 40.5461C96.5378 33.771 84.5292 30.3928 71.986 31.9158C45.2257 35.1652 26.1663 59.4928 29.4157 86.2531C29.4401 86.4541 29.4657 86.6546 29.4925 86.8547Z" fill="white"/>
+        </g>
+        <ellipse cx="80" cy="168" rx="56" ry="5.6" fill="url(#paint5_radial)"/>
+      </g>
+      <defs>
+        <filter id="filter0_f" x="61.7549" y="63.6997" width="74.5642" height="74.8273" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+          <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur"/>
+        </filter>
+        <filter id="filter1_f" x="38.6602" y="89.9624" width="100.145" height="52.4376" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+          <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur"/>
+        </filter>
+        <filter id="filter2_f" x="25.0547" y="27.5552" width="85.0371" height="63.2997" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+          <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur"/>
+        </filter>
+        <radialGradient id="paint4_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(60.05 56.4999) rotate(53.4207) scale(82.8111 89.8437)">
+          <stop stop-color="white"/>
+          <stop offset="1" stop-color="#878787" stop-opacity="0.3"/>
+        </radialGradient>
+        <radialGradient id="paint5_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(80 166.644) rotate(179.955) scale(56 4.24375)">
+          <stop stop-color="#D2D2D2"/>
+          <stop offset="1" stop-color="#E6E6E6" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  `
+
+  const render = (svg) => {
+    document.querySelector("#polywrap").innerHTML = svg;
+  }
+
+  render(polywrapSvg);
+
+</script>
