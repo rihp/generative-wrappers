@@ -1,5 +1,6 @@
 TODOS: 
-- [ ] Add generative blobs script for dynamic blobs
+- [x] Add generative blobs script for dynamic blobs
+- [x] Implement generative blobs
 - [ ] Submit minihack
 - [ ] Finish readme and instructions
 
